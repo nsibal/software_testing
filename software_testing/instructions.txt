@@ -1,0 +1,32 @@
+Clone this repository and in the `software_testing` directory run
+
+mvn clean
+mvn install
+
+A file called 'JavaAgent-1.0-SNAPSHOT.jar' will be generated.
+Copy it from the 'target' directory to a project under test.
+
+cp target/JavaAgent-1.0-SNAPSHOT.jar [destination]
+
+
+Add these following lines to the 'pom.xml' file of the target project
+
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <configuration>
+    <argLine>-javaagent:./JavaAgent-1.0-SNAPSHOT.jar
+    </argLine>
+   <properties>
+    <property>
+      <name>listener</name>
+      <value>StatementCoverageTool.JUnitListener</value>
+    </property>
+   </properties>
+  </configuration>
+</plugin>
+
+
+Go to the directory of the project under test, and run:
+
+mvn test
